@@ -9,6 +9,15 @@ def load_image(image_path, grayscale=False, target_size=None):
     return image.img_to_array(pil_image)
 
 
+def preprocess_image(image, grascale=False):
+    image_array = np.fromstring(image, np.uint8)
+    unchanged_image = cv2.imdecode(image_array, cv2.IMREAD_UNCHANGED)
+    if grascale:
+        return cv2.cvtColor(unchanged_image, cv2.COLOR_BGR2GRAY)
+    else:
+        return cv2.cvtColor(unchanged_image, cv2.COLOR_BGR2RGB)
+
+
 def load_detection_model(model_path):
     detection_model = cv2.CascadeClassifier(model_path)
     return detection_model
